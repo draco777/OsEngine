@@ -1186,6 +1186,12 @@ namespace OsEngine.Market.Servers.QuikLua
 
                     SendLogMessage("Инструмент " + series.Security.Name + "ТаймФрейм" + series.TimeFrame +
                                    " успешно подключен на получение данных и прослушивание свечек", LogMessageType.System);
+
+                    if (_tickStorage != null)
+                    {
+                        _tickStorage.SetSecurityToSave(security);
+                    }
+
                     return series;
                 }
             }
@@ -1378,6 +1384,11 @@ namespace OsEngine.Market.Servers.QuikLua
                     _depths = new List<MarketDepth>();
                 }
 
+                if (orderBook.bid == null || orderBook.offer == null)
+                {
+                    return;
+                }
+
                 MarketDepth myDepth = new MarketDepth();
 
                 myDepth.SecurityNameCode = orderBook.sec_code;
@@ -1453,7 +1464,11 @@ namespace OsEngine.Market.Servers.QuikLua
         /// <summary>
         /// все тики имеющиеся у сервера
         /// </summary>
-        public List<Trade>[] AllTrades { get { return _allTrades; } }
+        public List<Trade>[] AllTrades { get 
+        {
+            return _allTrades;
+        } 
+        }
 
         /// <summary>
         /// взять тики по инструменту

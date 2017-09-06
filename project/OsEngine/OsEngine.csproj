@@ -283,6 +283,7 @@
     <Compile Include="Entity\CumulativeDeltaTimeFrameUi.xaml.cs">
       <DependentUpon>CumulativeDeltaTimeFrameUi.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Entity\MarketDepthPainter.cs" />
     <Compile Include="Entity\SecurityLevelOne.cs" />
     <Compile Include="Entity\StrategyParameter.cs" />
     <Compile Include="Entity\TimeFrameBuilder.cs" />
@@ -340,6 +341,7 @@
     <Compile Include="Market\Servers\QuikLua\QuikLuaServerUi.xaml.cs">
       <DependentUpon>QuikLuaServerUi.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Market\Servers\ServerMasterPortfoliosPainter.cs" />
     <Compile Include="Market\Servers\ServerTickStorage.cs" />
     <Compile Include="Market\Servers\Tester\TesterServer.cs" />
     <Compile Include="Market\Servers\Tester\TesterServerUi.xaml.cs">

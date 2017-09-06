@@ -17,7 +17,6 @@ namespace OsEngine.OsTrader.Panels
             _panel = panel;
             CreateTabs();
             TabControlBotsName.SelectionChanged += TabControlBotsName_SelectionChanged;
-            _chart = new ChartPainter(panel.NameStrategyUniq);
             PaintActivTab(0);
         }
 
@@ -55,15 +54,20 @@ namespace OsEngine.OsTrader.Panels
             }
             _lastTabNum = tabNum;
 
-            _chart.StopPaint();
+            if (_chart != null)
+            {
+                _chart.StopPaint();
+                _chart.Clear();
+                _chart.Delete();
+            }
 
-            _chart.Clear();
 
             if (tabNum < _panel.TabsSimple.Count)
             {
-                _chart.PaintCandles(_panel.TabsSimple[tabNum].CandlesFinishedOnly);
-                _chart.StartPaint(ChartHostPanel, RectChart);
-                _chart.PaintPositions(_panel.TabsSimple[tabNum].PositionsAll);
+                _chart = new ChartPainter(_panel.NameStrategyUniq);
+                _chart.ProcessCandles(_panel.TabsSimple[tabNum].CandlesFinishedOnly);
+                _chart.StartPaintPrimeChart(ChartHostPanel, RectChart);
+                _chart.ProcessPositions(_panel.TabsSimple[tabNum].PositionsAll);
 
                 for (int i = 0;_panel.TabsSimple[tabNum].Indicators != null && i < _panel.TabsSimple[tabNum].Indicators.Count; i++)
                 {
@@ -71,15 +75,16 @@ namespace OsEngine.OsTrader.Panels
                     _panel.TabsSimple[tabNum].Indicators[i].NameSeries = _chart.CreateSeries(area,
                         _panel.TabsSimple[tabNum].Indicators[i].TypeIndicator, _panel.TabsSimple[tabNum].Indicators[i].NameSeries);
 
-                    _chart.PaintIndicator(_panel.TabsSimple[tabNum].Indicators[i]);
+                    _chart.ProcessIndicator(_panel.TabsSimple[tabNum].Indicators[i]);
                 }
             }
             else
             {
-                tabNum = tabNum - _panel.TabsSimple.Count;
 
-                _chart.PaintCandles(_panel.TabsIndex[tabNum].Candles);
-                _chart.StartPaint(ChartHostPanel, RectChart);
+                tabNum = tabNum - _panel.TabsSimple.Count;
+                _chart = new ChartPainter(_panel.NameStrategyUniq);
+                _chart.ProcessCandles(_panel.TabsIndex[tabNum].Candles);
+                _chart.StartPaintPrimeChart(ChartHostPanel, RectChart);
 
                 for (int i = 0; _panel.TabsIndex[tabNum].Indicators !=  null && i < _panel.TabsIndex[tabNum].Indicators.Count; i++)
                 {
@@ -87,7 +92,7 @@ namespace OsEngine.OsTrader.Panels
                     _panel.TabsIndex[tabNum].Indicators[i].NameSeries = _chart.CreateSeries(area,
                         _panel.TabsIndex[tabNum].Indicators[i].TypeIndicator, _panel.TabsIndex[tabNum].Indicators[i].Name + i);
 
-                    _chart.PaintIndicator(_panel.TabsIndex[tabNum].Indicators[i]);
+                    _chart.ProcessIndicator(_panel.TabsIndex[tabNum].Indicators[i]);
                 }
             }
 
