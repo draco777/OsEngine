@@ -21,6 +21,7 @@ namespace OsEngine.Market.Servers.QuikLua
 
             LabelStatus.Content = _server.ServerStatus;
             _server.ConnectStatusChangeEvent += server_ConnectChangeEvent;
+            TextBoxServerPort.Text = _server.ServerPort;
 
             log.StartPaint(Host);
             CheckBoxNeadToSaveTrade.IsChecked = _server.NeadToSaveTicks;
@@ -71,6 +72,7 @@ namespace OsEngine.Market.Servers.QuikLua
 
         private void ButtonConnect_Click(object sender, RoutedEventArgs e) // кнопка подключить сервер
         {
+            _server.ServerPort = TextBoxServerPort.Text;
             _server.Save();
             _server.StartServer();
         }

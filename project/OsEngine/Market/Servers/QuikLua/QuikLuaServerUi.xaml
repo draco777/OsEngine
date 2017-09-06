@@ -15,5 +15,7 @@
         <CheckBox Name="CheckBoxNeadToSaveTrade" Content="Сохранять историю" HorizontalAlignment="Left" Margin="465,15,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="TextBoxCountDaysSave" HorizontalAlignment="Right" Height="23" Margin="0,41,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74"/>
         <Label Content="Дней подгружать: " Margin="465,39,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="118"/>
+        <TextBox x:Name="TextBoxServerPort" HorizontalAlignment="Left" Height="23" Margin="79,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="153"/>
+        <Label Content="Порт" HorizontalAlignment="Left" Margin="16,42,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

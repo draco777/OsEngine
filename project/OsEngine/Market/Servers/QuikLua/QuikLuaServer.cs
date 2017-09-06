@@ -29,6 +29,7 @@ namespace OsEngine.Market.Servers.QuikLua
             ServerStatus = ServerConnectStatus.Disconnect;
             ServerType = ServerType.QuikLua;
             _neadToSaveTicks = true;
+            ServerPort = "34130";
 
             Load();
 
@@ -77,7 +78,12 @@ namespace OsEngine.Market.Servers.QuikLua
 
         }
 
-//сервис
+        //сервис
+
+        /// <summary>
+        /// порт по которому нужно соединяться с сервером
+        /// </summary>
+        public string ServerPort;
 
         /// <summary>
         /// взять тип сервера. 
@@ -153,6 +159,7 @@ namespace OsEngine.Market.Servers.QuikLua
                 {
                     _countDaysTickNeadToSave = Convert.ToInt32(reader.ReadLine());
                     _neadToSaveTicks = Convert.ToBoolean(reader.ReadLine());
+                    ServerPort = reader.ReadLine();
                     reader.Close();
                 }
             }
@@ -173,6 +180,7 @@ namespace OsEngine.Market.Servers.QuikLua
                 {
                     writer.WriteLine(CountDaysTickNeadToSave);
                     writer.WriteLine(NeadToSaveTicks);
+                    writer.WriteLine(ServerPort);
                     writer.Close();
                 }
             }
@@ -402,7 +410,7 @@ namespace OsEngine.Market.Servers.QuikLua
         {
             if (QuikLua == null)
             {
-                QuikLua = new QuikSharp.Quik(QuikSharp.Quik.DefaultPort, new InMemoryStorage());
+                QuikLua = new QuikSharp.Quik(int.Parse(ServerPort), new InMemoryStorage());
 
                 
                 QuikLua.Events.OnConnected += QuikLua_Connected;

@@ -89,7 +89,7 @@ is_connected = false
 -- used to write missed values to a file and then resend them if a client reconnects
 -- to avoid resending missed values, stop the script in Quik
 was_connected = false
-local port = 34130
+local port = 34135
 local callback_port = port + 1
 -- we need two ports since callbacks and responses conflict and write to the same socket at the same time
 -- I do not know how to make locking in Lua, it is just simpler to have two independent connections
